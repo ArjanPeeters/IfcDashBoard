@@ -5,15 +5,13 @@ import numpy as np
 import os
 import pathlib
 import datachecks
+import config
 
 pd.set_option("display.max_rows", None, "display.max_columns", None, "display.max_colwidth", -1, "display.width", None)
-IFC_dir = 'C:/Users/ArjanPeeters/PycharmProjects/IfcDashBoard/TestModel DataSetSchependomlaan'
-single_ifc = "C:/Users/ArjanPeeters/PycharmProjects/IfcDashBoard/592-02_Onthardingsgebouw.ifc"
 props_to_check = ['LoadBearing', 'FireRating', 'IsExternal', 'AcousticRating', 'Phase']
-exlude_element_list = ['IfcProject']
 
 ifc_files = []
-for root, dirs, files in os.walk(IFC_dir):  # get all IFC files in directory
+for root, dirs, files in os.walk(config.file_directory):  # get all IFC files in directory
     for file in files:
         if file.lower().endswith(".ifc"):
             found_file = os.path.join(root.replace('/', '\\'), file)
@@ -63,7 +61,7 @@ for file in ifc_files:
 
     all_elements = ifc_file.by_type('IfcProduct')
     for element in all_elements:
-        if element not in exlude_element_list:
+        if element not in config.exclude_element_list:
             PropertySets = {}
             for check in props_to_check:  # prepare a property dict with None elements
                 PropertySets['ElementProperty' + check] = None
