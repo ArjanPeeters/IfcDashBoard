@@ -4,7 +4,7 @@ This Python script extracts data from IFC files and exports it to an excel file.
 
 It uses the IfcOpenShell toolkit.
 
-I might do a propper readme later.
+I might do a proper readme later.
 
 
 
