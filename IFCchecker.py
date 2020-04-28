@@ -151,7 +151,9 @@ print(ifc_elements_df.ClassificationName.value_counts())
 print(ifc_elements_df.ClassificationItemReference.value_counts())
 
 # write everything to excel.
-writer = pd.ExcelWriter('test_export.xlsx', engine='xlsxwriter')
+writer = pd.ExcelWriter(
+    config.excel_file_name if config.excel_file_name.endswith('xlsx') else config.excel_file_name + '.xlsx',
+    engine='xlsxwriter')
 ifc_projects_df.to_excel(writer, 'projects')
 ifc_elements_df.to_excel(writer, 'elements')
 ifc_buildingstoreys_df.to_excel(writer, 'buildingstoreys')
