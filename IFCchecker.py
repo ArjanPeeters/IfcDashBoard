@@ -19,7 +19,7 @@ for root, dirs, files in os.walk(config.file_directory):  # get all IFC files in
             ifc_files.append(found_file)
 print(ifc_files)
 
-ProjectGlobalIds = []
+ProjectGlobalIds = {}
 ifc_projects_df = pd.DataFrame()
 ifc_buildingstoreys_df = pd.DataFrame()
 ifc_elements_df = pd.DataFrame()
@@ -31,10 +31,11 @@ for file in ifc_files:
 
     project = ifc_file.by_type('IfcProject')[0]
     if project.GlobalId in ProjectGlobalIds:
-        print('File al gedaan:', project.GlobalId, project.Name)
-        continue
-    ProjectGlobalIds.append(project.GlobalId)
-    print(project.GlobalId, project.Name)
+        if ProjectGlobalIds[project.GlobalId] == os.path.basename(file):
+            print('File al gedaan:', project.GlobalId, os.path.basename(file), project.Name)
+            continue
+    ProjectGlobalIds[project.GlobalId] = os.path.basename(file)
+    print(project.GlobalId, os.path.basename(file), project.Name)
 
     project_info = {
         'ProjectGlobalId': project.GlobalId,
